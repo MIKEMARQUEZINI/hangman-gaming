@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useRef, useState } from "react";
+import { GameStage, Infos } from "../../enum/EGaming";
 import * as S from "./styles";
 
 interface Props {
@@ -38,11 +39,17 @@ const Gaming = ({
 
   return (
     <S.Content>
-      <S.Title>Game</S.Title>
-      <S.infos>Category: {pickedCategory}</S.infos>
-      <S.Points>Points: {points}</S.Points>
-      <S.infos>Attempts: {attempts}</S.infos>
-      <S.Text>Guess the secret word in 5 tries or less!</S.Text>
+      <S.Title>{GameStage.Gaming}</S.Title>
+      <S.infos>
+        {Infos.Category}: {pickedCategory}
+      </S.infos>
+      <S.Points>
+        {Infos.Points}: {points}
+      </S.Points>
+      <S.infos>
+        {Infos.Attempts}: {attempts}
+      </S.infos>
+      <S.Text>{Infos.GuessTheSecretWord}</S.Text>
       <S.WordContainer>
         {letters.map((letter, index) => (
           <S.letter key={index}>
@@ -59,10 +66,10 @@ const Gaming = ({
           value={letter}
           ref={letterInputRef}
         />
-        <S.ButtonGaming type="submit">Next</S.ButtonGaming>
+        <S.ButtonGaming type="submit">{Infos.Next}</S.ButtonGaming>
       </S.LetterContainer>
       <S.LetterContainer>
-        <S.Title>Wrong Letters:</S.Title>
+        <S.Title>{Infos.WrongLetters}</S.Title>
         {wrongLetters.map((letter: string) => (
           <S.letter key={letter}>{letter}</S.letter>
         ))}

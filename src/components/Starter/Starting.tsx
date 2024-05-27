@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { GameStage, Infos } from "../../enum/EGaming";
 import * as S from "../../styles/Globals";
 
 interface Props {
@@ -8,10 +9,10 @@ interface Props {
 const Starting = ({ handleEarlyGame }: Props) => {
   return (
     <S.Container>
-      <S.Title>Starting</S.Title>
-      <S.infos>Guess the secret word in 5 tries or less!</S.infos>
-      <S.Text>Click the button to start the game</S.Text>
-      <S.Button onClick={handleEarlyGame}>Let's Go!</S.Button>
+      <S.Title>{GameStage.Starting}</S.Title>
+      <S.infos>{Infos.GuessTheSecretWord}</S.infos>
+      <S.Text>{Infos.ClickHere}</S.Text>
+      <S.Button onClick={handleEarlyGame}>{Infos.Go}</S.Button>
     </S.Container>
   );
 };
