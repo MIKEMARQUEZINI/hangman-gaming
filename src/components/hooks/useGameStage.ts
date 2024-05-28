@@ -3,6 +3,8 @@ import { wordlist } from "../../data/WordList";
 import { GameStage } from "../../enum/EGaming";
 import utils from "../utils";
 
+type SetStateFunction = (state: (actualLetters: string[]) => string[]) => void;
+
 export function useGameState() {
   const [gameStage, setGameStage] = useState(GameStage.Starting);
   const [pickedWord, setPickedWord] = useState<string>("");
@@ -27,6 +29,10 @@ export function useGameState() {
     setGameStage(GameStage.Gaming);
   };
 
+  const addLetterToArray = (setState: SetStateFunction, letter: string) => {
+    setState((actualLetters: string[]) => [...actualLetters, letter]);
+  };
+
   const handleMidGame = (letter: string) => {
     const formatLetter = letter.toLowerCase();
 
@@ -38,16 +44,9 @@ export function useGameState() {
     }
 
     if (letters.includes(formatLetter)) {
-      setGuessedLetters((actualGuessedLetters) => [
-        ...actualGuessedLetters,
-        formatLetter,
-      ]);
+      addLetterToArray(setGuessedLetters, formatLetter);
     } else {
-      setWrongLetters((actualWrongLetters) => [
-        ...actualWrongLetters,
-        formatLetter,
-      ]);
-
+      addLetterToArray(setWrongLetters, formatLetter);
       setAttempts((attempts) => attempts - 1);
     }
   };
