@@ -16,7 +16,6 @@ function App() {
       {gameState.gameStage === GameStage.Gaming && (
         <Gaming
           handleMidGame={gameState.handleMidGame}
-          pickedWord={gameState.pickedWord}
           pickedCategory={gameState.pickedCategory}
           letters={gameState.letters}
           guessedLetters={gameState.guessedLetters}
