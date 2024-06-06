@@ -4,13 +4,17 @@ import * as S from "../../styles/Globals";
 
 interface Props {
   handleEndGame: () => void;
+  points: number;
 }
 
-const Ending = ({ handleEndGame }: Props) => {
+const Ending = ({ handleEndGame, points }: Props) => {
   return (
     <S.Container>
       <S.Title>{GameScreen.Finish}</S.Title>
       <S.Text>{Infos.ClickHere}</S.Text>
+      <S.Text>
+        {Infos.scoreText} {points}
+      </S.Text>
       <S.Button onClick={handleEndGame}>{Infos.Try}</S.Button>
     </S.Container>
   );
