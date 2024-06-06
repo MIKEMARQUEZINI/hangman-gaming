@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { wordlist } from "../../data/WordList";
 import { GameStage } from "../../enum/EGaming";
 import utils from "../utils";
 
 type SetStateFunction = (state: (actualLetters: string[]) => string[]) => void;
+
+const starterAttempts = 5;
 
 export function useGameState() {
   const [gameStage, setGameStage] = useState(GameStage.Starting);
@@ -12,10 +14,12 @@ export function useGameState() {
   const [letters, setLetters] = useState<string[]>([]);
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
   const [wrongLetters, setWrongLetters] = useState<string[]>([]);
-  const [attempts, setAttempts] = useState<number>(5);
-  const [points] = useState<number>(0);
+  const [attempts, setAttempts] = useState<number>(starterAttempts);
+  const [points, setPoints] = useState<number>(0);
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
-  const handleEarlyGame = () => {
+  const handleEarlyGame = useCallback(() => {
+    clearLettersStates();
     const { catchWord } = utils();
     const { randomWord, randomCategory } = catchWord(wordlist);
 
@@ -27,7 +31,7 @@ export function useGameState() {
     setPickedCategory(randomCategory);
     setLetters(word);
     setGameStage(GameStage.Gaming);
-  };
+  }, []);
 
   const addLetterToArray = (setState: SetStateFunction, letter: string) => {
     setState((actualLetters: string[]) => [...actualLetters, letter]);
@@ -63,7 +67,24 @@ export function useGameState() {
     }
   }, [attempts]);
 
+  useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+      return;
+    }
+
+    const uniqueLetters = [...new Set(letters)];
+
+    if (guessedLetters.length === uniqueLetters.length) {
+      setPoints((actualPoints) => actualPoints + 10);
+      setAttempts(starterAttempts);
+      handleEarlyGame();
+    }
+  }, [guessedLetters, letters, handleEarlyGame]);
+
   const handleEndGame = () => {
+    setPoints(0);
+    setAttempts(starterAttempts);
     setGameStage(GameStage.Starting);
   };
 
