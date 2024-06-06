@@ -22,4 +22,5 @@ export enum Infos {
   Go = "Let's Go!",
   Next = "Next",
   ClickHere = "Click here to start",
+  scoreText = "Your score is: ",
 }
