@@ -6,7 +6,6 @@ import * as S from "./styles";
 interface Props {
   handleMidGame: (letter: string) => void;
   pickedCategory: string;
-  pickedWord: string;
   attempts: number;
   points: number;
   letters: string[];
@@ -19,12 +18,11 @@ const Gaming = ({
   pickedCategory,
   attempts,
   points,
-  pickedWord,
   letters,
   guessedLetters = [],
   wrongLetters,
 }: Props) => {
-  const emptyLetter = <S.letter key="empty"> </S.letter>;
+  const emptyLetter = <S.EmptySquare key="empty"> </S.EmptySquare>;
   const [letter, setLetter] = useState<string>("");
   const letterInputRef = useRef<HTMLInputElement>(null);
 
@@ -81,7 +79,6 @@ const Gaming = ({
 Gaming.propTypes = {
   handleMidGame: PropTypes.func.isRequired,
   pickedCategory: PropTypes.string.isRequired,
-  pickedWord: PropTypes.string.isRequired,
   attempts: PropTypes.number.isRequired,
   points: PropTypes.number.isRequired,
   letters: PropTypes.arrayOf(PropTypes.string).isRequired,
