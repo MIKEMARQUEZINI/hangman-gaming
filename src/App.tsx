@@ -26,7 +26,10 @@ function App() {
         />
       )}
       {gameState.gameStage === GameStage.Ending && (
-        <Ending handleEndGame={gameState.handleEndGame} />
+        <Ending
+          handleEndGame={gameState.handleEndGame}
+          points={gameState.points}
+        />
       )}
     </S.Container>
   );
