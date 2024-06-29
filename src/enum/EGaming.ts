@@ -1,26 +1,35 @@
 export enum GameStage {
-  Starting = "Starting",
-  Gaming = "Gaming",
-  Ending = "Ending",
+  Starting = "Começando",
+  Playing = "Jogando",
+  End = "Fim de Jogo",
 }
 
 export enum GameScreen {
-  Starter = "Home",
-  Game = "Game Mode",
-  Finish = "Game Over",
+  Starter = "Bem vindo ao Jogo da Forca",
+  Playing = "Jogando Forca",
+  Finish = "Fim de Jogo",
 }
 
-export enum Infos {
-  Category = "Category",
-  Points = "Points",
-  Attempts = "Attempts",
-  GuessTheSecretWord = "Guess the secret word in 5 tries or less!",
-  WrongLetters = "Wrong Letters:",
-  Try = "Try again!",
-  YouWin = "You win!",
-  YouLose = "You lose!",
-  Go = "Let's Go!",
-  Next = "Next",
-  ClickHere = "Click here to start",
-  scoreText = "Your score is: ",
+export class Information {
+  static Home = {
+    ChallengeSecretWord: "Desafio você a tentar adivinhar a palavra secreta!",
+    ClickHere: "Clique para começar",
+  };
+
+  static Playing = {
+    Category: "Categoria",
+    score: "Pontos",
+    remainingAttempts: "Tentativas",
+    incorrectlyGuessedLetters: "Você ja tentou as letras: ",
+  };
+
+  static End = {
+    Lost: "Você Perdeu!",
+    TryAgain: "Tentar novamente!",
+  };
+
+  static Won = "Você Ganhou!";
+  static LetsGo = "Vamos la!";
+  static Next = "Proximo";
+  static ScoreText = "Seus pontos são: ";
 }
