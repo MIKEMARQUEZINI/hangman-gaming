@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+
 import { GameScreen, Information } from "../../enum/EGaming";
 import * as S from "./styles";
 
@@ -13,7 +13,7 @@ interface Props {
   incorrectlyGuessedLetters: string[];
 }
 
-const Gaming = ({
+const Gaming: React.FC<Props> = ({
   onMidGameAction,
   currentCategory,
   remainingAttempts,
@@ -77,14 +77,4 @@ const Gaming = ({
   );
 };
 
-Gaming.propTypes = {
-  onMidGameAction: PropTypes.func.isRequired,
-  currentCategory: PropTypes.string.isRequired,
-  remainingAttempts: PropTypes.number.isRequired,
-  score: PropTypes.number.isRequired,
-  availableLetters: PropTypes.arrayOf(PropTypes.string).isRequired,
-  correctlyGuessedLetters: PropTypes.arrayOf(PropTypes.string),
-  incorrectlyGuessedLetters: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
-export default Gaming;
+export default React.memo(Gaming);

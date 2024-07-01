@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export function useGamePlay(
   letters: string[],
@@ -22,30 +22,33 @@ export function useGamePlay(
     setState((actualLetters) => [...actualLetters, letter]);
   };
 
-  const handleGuess = (letter: string) => {
-    const formatLetter = letter.toLowerCase();
+  const handleGuess = useCallback(
+    (letter: string) => {
+      const formatLetter = letter.toLowerCase();
 
-    if (
-      correctlyGuessedLetters.includes(formatLetter) ||
-      incorrectlyGuessedLetters.includes(formatLetter)
-    ) {
-      return;
-    }
+      if (
+        correctlyGuessedLetters.includes(formatLetter) ||
+        incorrectlyGuessedLetters.includes(formatLetter)
+      ) {
+        return;
+      }
 
-    if (letters.includes(formatLetter)) {
-      addLetterToArray(setcorrectlyGuessedLetters, formatLetter);
-    } else {
-      addLetterToArray(setincorrectlyGuessedLetters, formatLetter);
-      setremainingAttempts((remainingAttempts) => remainingAttempts - 1);
-    }
-  };
+      if (letters.includes(formatLetter)) {
+        addLetterToArray(setcorrectlyGuessedLetters, formatLetter);
+      } else {
+        addLetterToArray(setincorrectlyGuessedLetters, formatLetter);
+        setremainingAttempts((remainingAttempts) => remainingAttempts - 1);
+      }
+    },
+    [correctlyGuessedLetters, incorrectlyGuessedLetters, letters]
+  );
 
-  const resetGame = () => {
+  const resetGame = useCallback(() => {
     setcorrectlyGuessedLetters([]);
     setincorrectlyGuessedLetters([]);
     setremainingAttempts(starterremainingAttempts);
     setscore(0);
-  };
+  }, [starterremainingAttempts]);
 
   return {
     correctlyGuessedLetters,

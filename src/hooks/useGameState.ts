@@ -28,7 +28,7 @@ export function useGameState() {
     if (remainingAttempts <= 0) {
       setGameStage(GameStage.End);
     }
-  }, [remainingAttempts]);
+  }, [remainingAttempts, setGameStage]);
 
   useEffect(() => {
     const uniqueLetters = [...new Set(letters)];
