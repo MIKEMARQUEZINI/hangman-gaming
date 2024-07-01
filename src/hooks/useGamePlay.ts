@@ -55,5 +55,6 @@ export function useGamePlay(
     handleGuess,
     resetGame,
     setscore,
+    setcorrectlyGuessedLetters,
   };
 }

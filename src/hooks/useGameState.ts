@@ -5,6 +5,7 @@ import { useGamePlay } from "./useGamePlay";
 
 export function useGameState() {
   const [gameStage, setGameStage] = useState(GameStage.Starting);
+  const [score, setscore] = useState<number>(0);
   const { pickedWord, currentCategory, letters, initializeGame } =
     useGameInitialization();
   const starterremainingAttempts = 5;
@@ -12,14 +13,14 @@ export function useGameState() {
     correctlyGuessedLetters,
     incorrectlyGuessedLetters,
     remainingAttempts,
-    score,
     handleGuess,
     resetGame,
-    setscore,
+    setcorrectlyGuessedLetters,
   } = useGamePlay(letters, starterremainingAttempts);
 
   const startGame = useCallback(() => {
     initializeGame();
+    setscore(0);
     setGameStage(GameStage.Playing);
   }, [initializeGame]);
 
@@ -33,10 +34,17 @@ export function useGameState() {
     const uniqueLetters = [...new Set(letters)];
 
     if (correctlyGuessedLetters.length === uniqueLetters.length) {
-      setscore((actualscore) => actualscore + 10);
+      setscore((score) => score + 10);
+      setcorrectlyGuessedLetters([]);
       initializeGame();
     }
-  }, [correctlyGuessedLetters, letters, initializeGame, setscore]);
+  }, [
+    correctlyGuessedLetters,
+    setcorrectlyGuessedLetters,
+    letters,
+    initializeGame,
+    setscore,
+  ]);
 
   const endGame = () => {
     resetGame();
