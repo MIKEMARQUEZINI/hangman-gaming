@@ -22,7 +22,7 @@ const Gaming = ({
   correctlyGuessedLetters = [],
   incorrectlyGuessedLetters,
 }: Props) => {
-  const emptyLetter = <S.EmptySquare key="empty"></S.EmptySquare>;
+  const emptyLetter = <S.EmptySquare></S.EmptySquare>;
   const [letter, setLetter] = useState<string>("");
   const letterInputRef = useRef<HTMLInputElement>(null);
 
@@ -37,24 +37,21 @@ const Gaming = ({
 
   return (
     <S.Content>
-      <S.Title>{GameScreen.Playing}</S.Title>
-      <S.infos>
+      <S.Header>{GameScreen.Playing}</S.Header>
+      <S.Infos>
         {Information.Playing.Category}: {currentCategory}
-      </S.infos>
-      <S.score>
+      </S.Infos>
+      <S.Points>
         {Information.Playing.score}: {score}
-      </S.score>
-      <S.infos>
-        {Information.Playing.remainingAttempts}: {remainingAttempts}s
-      </S.infos>
+      </S.Points>
       <S.Text>{Information.Home.ChallengeSecretWord}</S.Text>
       <S.WordContainer>
         {availableLetters.map((availableLetters, index) => (
-          <S.letter key={index}>
+          <S.Letter key={index}>
             {correctlyGuessedLetters.includes(availableLetters)
               ? availableLetters
               : emptyLetter}
-          </S.letter>
+          </S.Letter>
         ))}
       </S.WordContainer>
       <S.LetterContainer onSubmit={handleSubmit}>
@@ -68,12 +65,14 @@ const Gaming = ({
         />
         <S.ButtonGaming type="submit">{Information.Next}</S.ButtonGaming>
       </S.LetterContainer>
-      <S.LetterContainer>
-        <S.Title>{Information.Playing.incorrectlyGuessedLetters}</S.Title>
+      <S.Footer>
+        <S.TextFooter>
+          {Information.Playing.incorrectlyGuessedLetters}
+        </S.TextFooter>
         {incorrectlyGuessedLetters.map((letter: string) => (
-          <S.letter key={letter}>{letter}</S.letter>
+          <S.Letter key={letter}>{letter}</S.Letter>
         ))}
-      </S.LetterContainer>
+      </S.Footer>
     </S.Content>
   );
 };
