@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+export const GlobalStyle = styled.div``;
+
 export const centralize = {
   display: "block",
   justifyContent: "center",

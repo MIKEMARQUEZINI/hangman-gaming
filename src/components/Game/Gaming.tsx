@@ -1,34 +1,34 @@
 import PropTypes from "prop-types";
 import { useRef, useState } from "react";
-import { GameStage, Infos } from "../../enum/EGaming";
+import { GameScreen, Information } from "../../enum/EGaming";
 import * as S from "./styles";
 
 interface Props {
-  handleMidGame: (letter: string) => void;
-  pickedCategory: string;
-  attempts: number;
-  points: number;
-  letters: string[];
-  guessedLetters: string[];
-  wrongLetters: string[];
+  onMidGameAction: (letter: string) => void;
+  currentCategory: string;
+  remainingAttempts: number;
+  score: number;
+  availableLetters: string[];
+  correctlyGuessedLetters: string[];
+  incorrectlyGuessedLetters: string[];
 }
 
 const Gaming = ({
-  handleMidGame,
-  pickedCategory,
-  attempts,
-  points,
-  letters,
-  guessedLetters = [],
-  wrongLetters,
+  onMidGameAction,
+  currentCategory,
+  remainingAttempts,
+  score,
+  availableLetters,
+  correctlyGuessedLetters = [],
+  incorrectlyGuessedLetters,
 }: Props) => {
-  const emptyLetter = <S.EmptySquare key="empty"> </S.EmptySquare>;
+  const emptyLetter = <S.EmptySquare key="empty"></S.EmptySquare>;
   const [letter, setLetter] = useState<string>("");
   const letterInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleMidGame(letter);
+    onMidGameAction(letter);
     setLetter("");
     if (letterInputRef.current) {
       letterInputRef.current.focus();
@@ -37,21 +37,23 @@ const Gaming = ({
 
   return (
     <S.Content>
-      <S.Title>{GameStage.Gaming}</S.Title>
+      <S.Title>{GameScreen.Playing}</S.Title>
       <S.infos>
-        {Infos.Category}: {pickedCategory}
+        {Information.Playing.Category}: {currentCategory}
       </S.infos>
-      <S.Points>
-        {Infos.Points}: {points}
-      </S.Points>
+      <S.score>
+        {Information.Playing.score}: {score}
+      </S.score>
       <S.infos>
-        {Infos.Attempts}: {attempts}
+        {Information.Playing.remainingAttempts}: {remainingAttempts}s
       </S.infos>
-      <S.Text>{Infos.GuessTheSecretWord}</S.Text>
+      <S.Text>{Information.Home.ChallengeSecretWord}</S.Text>
       <S.WordContainer>
-        {letters.map((letter, index) => (
+        {availableLetters.map((availableLetters, index) => (
           <S.letter key={index}>
-            {guessedLetters.includes(letter) ? letter : emptyLetter}
+            {correctlyGuessedLetters.includes(availableLetters)
+              ? availableLetters
+              : emptyLetter}
           </S.letter>
         ))}
       </S.WordContainer>
@@ -64,11 +66,11 @@ const Gaming = ({
           value={letter}
           ref={letterInputRef}
         />
-        <S.ButtonGaming type="submit">{Infos.Next}</S.ButtonGaming>
+        <S.ButtonGaming type="submit">{Information.Next}</S.ButtonGaming>
       </S.LetterContainer>
       <S.LetterContainer>
-        <S.Title>{Infos.WrongLetters}</S.Title>
-        {wrongLetters.map((letter: string) => (
+        <S.Title>{Information.Playing.incorrectlyGuessedLetters}</S.Title>
+        {incorrectlyGuessedLetters.map((letter: string) => (
           <S.letter key={letter}>{letter}</S.letter>
         ))}
       </S.LetterContainer>
@@ -77,13 +79,13 @@ const Gaming = ({
 };
 
 Gaming.propTypes = {
-  handleMidGame: PropTypes.func.isRequired,
-  pickedCategory: PropTypes.string.isRequired,
-  attempts: PropTypes.number.isRequired,
-  points: PropTypes.number.isRequired,
-  letters: PropTypes.arrayOf(PropTypes.string).isRequired,
-  guessedLetters: PropTypes.arrayOf(PropTypes.string),
-  wrongLetters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onMidGameAction: PropTypes.func.isRequired,
+  currentCategory: PropTypes.string.isRequired,
+  remainingAttempts: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
+  availableLetters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  correctlyGuessedLetters: PropTypes.arrayOf(PropTypes.string),
+  incorrectlyGuessedLetters: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Gaming;
