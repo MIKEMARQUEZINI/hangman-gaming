@@ -5,7 +5,7 @@ export enum GameStage {
 }
 
 export enum GameScreen {
-  Starter = "Bem vindo ao Jogo da Forca",
+  Welcome = "Bem vindo ao Jogo da Forca",
   Playing = "Jogando Forca",
   Finish = "Fim de Jogo",
 }

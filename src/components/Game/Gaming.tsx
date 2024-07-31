@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+
 import { GameScreen, Information } from "../../enum/EGaming";
 import * as S from "./styles";
 
@@ -13,7 +13,7 @@ interface Props {
   incorrectlyGuessedLetters: string[];
 }
 
-const Gaming = ({
+const Gaming: React.FC<Props> = ({
   onMidGameAction,
   currentCategory,
   remainingAttempts,
@@ -22,7 +22,7 @@ const Gaming = ({
   correctlyGuessedLetters = [],
   incorrectlyGuessedLetters,
 }: Props) => {
-  const emptyLetter = <S.EmptySquare key="empty"></S.EmptySquare>;
+  const emptyLetter = <S.EmptySquare></S.EmptySquare>;
   const [letter, setLetter] = useState<string>("");
   const letterInputRef = useRef<HTMLInputElement>(null);
 
@@ -37,24 +37,21 @@ const Gaming = ({
 
   return (
     <S.Content>
-      <S.Title>{GameScreen.Playing}</S.Title>
-      <S.infos>
+      <S.Header>{GameScreen.Playing}</S.Header>
+      <S.Infos>
         {Information.Playing.Category}: {currentCategory}
-      </S.infos>
-      <S.score>
+      </S.Infos>
+      <S.Points>
         {Information.Playing.score}: {score}
-      </S.score>
-      <S.infos>
-        {Information.Playing.remainingAttempts}: {remainingAttempts}s
-      </S.infos>
+      </S.Points>
       <S.Text>{Information.Home.ChallengeSecretWord}</S.Text>
       <S.WordContainer>
         {availableLetters.map((availableLetters, index) => (
-          <S.letter key={index}>
+          <S.Letter key={index}>
             {correctlyGuessedLetters.includes(availableLetters)
               ? availableLetters
               : emptyLetter}
-          </S.letter>
+          </S.Letter>
         ))}
       </S.WordContainer>
       <S.LetterContainer onSubmit={handleSubmit}>
@@ -68,24 +65,16 @@ const Gaming = ({
         />
         <S.ButtonGaming type="submit">{Information.Next}</S.ButtonGaming>
       </S.LetterContainer>
-      <S.LetterContainer>
-        <S.Title>{Information.Playing.incorrectlyGuessedLetters}</S.Title>
+      <S.Footer>
+        <S.TextFooter>
+          {Information.Playing.incorrectlyGuessedLetters}
+        </S.TextFooter>
         {incorrectlyGuessedLetters.map((letter: string) => (
-          <S.letter key={letter}>{letter}</S.letter>
+          <S.Letter key={letter}>{letter}</S.Letter>
         ))}
-      </S.LetterContainer>
+      </S.Footer>
     </S.Content>
   );
 };
 
-Gaming.propTypes = {
-  onMidGameAction: PropTypes.func.isRequired,
-  currentCategory: PropTypes.string.isRequired,
-  remainingAttempts: PropTypes.number.isRequired,
-  score: PropTypes.number.isRequired,
-  availableLetters: PropTypes.arrayOf(PropTypes.string).isRequired,
-  correctlyGuessedLetters: PropTypes.arrayOf(PropTypes.string),
-  incorrectlyGuessedLetters: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
-export default Gaming;
+export default React.memo(Gaming);

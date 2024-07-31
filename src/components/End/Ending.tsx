@@ -1,3 +1,5 @@
+import React from "react";
+
 import { GameScreen, Information } from "../../enum/EGaming";
 import * as S from "../../styles/Globals";
 
@@ -6,7 +8,7 @@ interface Props {
   score: number;
 }
 
-const Ending = ({ onEndGameAction, score }: Props) => {
+const Ending: React.FC<Props> = ({ onEndGameAction, score }) => {
   return (
     <S.Container>
       <S.Title>{GameScreen.Finish}</S.Title>
@@ -19,4 +21,4 @@ const Ending = ({ onEndGameAction, score }: Props) => {
   );
 };
 
-export default Ending;
+export default React.memo(Ending);

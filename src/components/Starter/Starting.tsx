@@ -1,4 +1,5 @@
-import PropTypes from "prop-types";
+import React from "react";
+
 import { GameScreen, Information } from "../../enum/EGaming";
 import * as S from "../../styles/Globals";
 
@@ -6,19 +7,16 @@ interface Props {
   handleGuess: () => void;
 }
 
-const Starting = ({ handleGuess }: Props) => {
+const Starting: React.FC<Props> = ({ handleGuess }) => {
   return (
-    <S.Container>
-      <S.Title>{GameScreen.Starter}</S.Title>
-      <S.infos>{Information.Home.ChallengeSecretWord}</S.infos>
-      <S.Text>{Information.Home.ClickHere}</S.Text>
-      <S.Button onClick={handleGuess}>{Information.LetsGo}</S.Button>
-    </S.Container>
+    <>
+      <S.Title>{GameScreen.Welcome}</S.Title>
+      <S.Container>
+        <S.Text>{Information.Home.ClickHere}</S.Text>
+        <S.Button onClick={handleGuess}>{Information.LetsGo}</S.Button>
+      </S.Container>
+    </>
   );
 };
 
-Starting.propTypes = {
-  handleGuess: PropTypes.func,
-};
-
-export default Starting;
+export default React.memo(Starting);
